@@ -1,0 +1,13 @@
+Nov 03 15:08:54 log-lab sshd-session[1359]: Invalid user fakeuser from 127.0.0.1 port 47592
+Nov 03 15:09:27 log-lab sshd-session[1359]: Failed password for invalid user fakeuser from 127.0.0.1 port 47592 ssh2
+Nov 03 15:09:42 log-lab sshd-session[1359]: Failed password for invalid user fakeuser from 127.0.0.1 port 47592 ssh2
+Nov 03 15:09:47 log-lab sshd-session[1359]: Failed password for invalid user fakeuser from 127.0.0.1 port 47592 ssh2
+Nov 03 15:09:49 log-lab sshd-session[1359]: Connection closed by invalid user fakeuser 127.0.0.1 port 47592 [preauth]
+Nov 03 15:10:38 log-lab sshd-session[1378]: Invalid user fakeuser from 127.0.0.1 port 42818
+Nov 03 15:10:52 log-lab sshd-session[1378]: Failed password for invalid user fakeuser from 127.0.0.1 port 42818 ssh2
+Nov 03 15:11:10 log-lab sshd-session[1378]: Failed password for invalid user fakeuser from 127.0.0.1 port 42818 ssh2
+Nov 03 15:11:22 log-lab sshd-session[1378]: Failed password for invalid user fakeuser from 127.0.0.1 port 42818 ssh2
+Nov 03 15:11:24 log-lab sshd-session[1378]: Connection closed by invalid user fakeuser 127.0.0.1 port 42818 [preauth]
+Nov 03 15:12:20 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2
+Nov 03 15:12:25 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2
+Nov 03 15:12:31 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2

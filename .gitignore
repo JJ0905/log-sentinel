@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+alerts.db
+.venv/
+.DS_Store
