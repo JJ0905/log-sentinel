@@ -57,7 +57,7 @@ class TestAuthLogParser(unittest.TestCase):
 
     def test_sample_file_counts(self):
         events = parse_file(str(SAMPLE), 2026)
-        self.assertEqual(len(events), 13)
+        self.assertEqual(len(events), 14)
         self.assertEqual(sum(e.event_type == "failed_password" for e in events), 9)
         self.assertEqual(sum(e.event_type == "invalid_user" for e in events), 2)
         self.assertEqual(sum(e.event_type == "connection_closed_preauth" for e in events), 2)

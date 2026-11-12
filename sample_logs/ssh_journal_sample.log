@@ -11,3 +11,4 @@ Nov 03 15:11:24 log-lab sshd-session[1378]: Connection closed by invalid user fa
 Nov 03 15:12:20 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2
 Nov 03 15:12:25 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2
 Nov 03 15:12:31 log-lab sshd-session[1393]: Failed password for junior from 127.0.0.1 port 56064 ssh2
+Nov 03 15:13:18 log-lab sshd-session[1409]: Accepted password for junior from 127.0.0.1 port 49620 ssh2
