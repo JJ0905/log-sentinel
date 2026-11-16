@@ -3,16 +3,20 @@
 Examples:
     python3 -m src.main sample_logs/ssh_journal_sample.log --year 2026 --threshold 3
     python3 -m src.main --web-log sample_logs/nginx_access_sample.log
+    python3 -m src.main sample_logs/ssh_journal_sample.log --year 2026 --summary --html report.html
 """
 import argparse
 from datetime import datetime
+from pathlib import Path
 
 from src import storage
 from src.detections.brute_force import detect_brute_force
 from src.detections.sql_injection import detect_sql_injection
 from src.detections.success_after_failures import detect_success_after_failures
+from src.detections.unusual_hours import detect_unusual_hours
 from src.parsers.auth_log import parse_file
 from src.parsers.nginx_access import parse_file as parse_web_file
+from src.report import clean, html_report, summary_text
 
 
 def main() -> None:
@@ -30,8 +34,16 @@ def main() -> None:
                         help="failures before a success that count as suspicious (default 3)")
     parser.add_argument("--success-window", type=int, default=300,
                         help="lookback in seconds for failures before a success (default 300)")
+    parser.add_argument("--work-start", type=int, default=7,
+                        help="first expected login hour, 0-23 (default 7)")
+    parser.add_argument("--work-end", type=int, default=19,
+                        help="end of expected login hours, 0-24 (default 19)")
     parser.add_argument("--web-window", type=int, default=300,
                         help="seconds between web requests that still count as one attack (default 300)")
+    parser.add_argument("--summary", action="store_true",
+                        help="print a summary of alerts by severity, rule, and IP")
+    parser.add_argument("--html", metavar="FILE",
+                        help="write a standalone HTML report to FILE")
     parser.add_argument("--db", default="alerts.db", help="SQLite file for alerts")
     args = parser.parse_args()
 
@@ -46,6 +58,10 @@ def main() -> None:
         ssh_events = parse_file(args.logfile, args.year)
         alerts += detect_brute_force(ssh_events, args.threshold, args.window)
         alerts += detect_success_after_failures(ssh_events, args.min_failures, args.success_window)
+        try:
+            alerts += detect_unusual_hours(ssh_events, args.work_start, args.work_end)
+        except ValueError as err:
+            parser.error(str(err))
 
     if args.web_log:
         web_events = parse_web_file(args.web_log)
@@ -59,8 +75,17 @@ def main() -> None:
     print(f"Parsed {len(ssh_events)} SSH events and {len(web_events)} web requests, "
           f"raised {len(alerts)} alert(s), {new} new.")
     for a in alerts:
-        print(f"  [{a.severity.upper()}] {a.description}")
+        print(f"  [{clean(a.severity).upper()}] {clean(a.description)}")
+
+    if args.summary:
+        print()
+        print(summary_text(alerts))
+
+    if args.html:
+        Path(args.html).write_text(html_report(alerts), encoding="utf-8")
+        print(f"\nWrote HTML report to {args.html}")
 
 
 if __name__ == "__main__":
     main()
+
